@@ -29,8 +29,8 @@ function preload() {
     { frameWidth: 20, frameHeight: 20 }
   );
 
-  this.load.spritesheet('chintaMove', 'assets/move/move.png',
-    { frameWidth: 50, frameHeight: 50 }
+  this.load.spritesheet('chintaMove', 'assets/Chinta.png',
+    { frameWidth: 60, frameHeight: 50 }
   );
 
 
@@ -65,7 +65,7 @@ function create() {
   //criando o chinta parado
   this.anims.create({
     key: 'move',
-    frames: this.anims.generateFrameNumbers('chintaMove', { start: 0, end: 5 }),
+    frames: this.anims.generateFrameNumbers('chintaMove', { start: 17, end: 22 }),
     frameRate: 10,
     repeat: -1
   });
