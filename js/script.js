@@ -29,12 +29,8 @@ function preload() {
     { frameWidth: 20, frameHeight: 20 }
   );
 
-  this.load.spritesheet('chinta', 'assets/Chinta Nemoto.png',
-    { frameWidth: 60, frameHeight: 58}
-  );
-
-  this.load.spritesheet('chintaMove', 'assets/move/Chinta Nemoto.png',
-    { frameWidth: 50, frameHeight: 60 }
+  this.load.spritesheet('chintaMove', 'assets/move/move.png',
+    { frameWidth: 50, frameHeight: 50 }
   );
 
 
@@ -58,7 +54,7 @@ function create() {
   // });
 
   // posição do chinta
-  chinta = this.physics.add.sprite(100, 300, 'chinta',0);
+  chinta = this.physics.add.sprite(100, 300, 'chintaMove',0);
 
   // personagem colidi nas bordas
   chinta.setCollideWorldBounds(true);
@@ -68,39 +64,12 @@ function create() {
 
   //criando o chinta parado
   this.anims.create({
-    key: 'stand',
-    frames: this.anims.generateFrameNumbers('chinta', { start: 0, end: 0 }),
-    frameRate: 20,
-    //epeat: -1
-  });
-
-  this.anims.create({
-    key: 'up',
-    frames: this.anims.generateFrameNumbers('chinta', { start: 0, end: 0 }),
-    frameRate: 20,
-    //repeat: -1
-  });
-
-  this.anims.create({
-    key: 'down',
-    frames: this.anims.generateFrameNumbers('chinta', { start: 8, end: 15  }),
+    key: 'move',
+    frames: this.anims.generateFrameNumbers('chintaMove', { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1
   });
 
-  this.anims.create({
-    key: 'right',
-    frames: this.anims.generateFrameNumbers('chinta', { start: 8, end: 15  }),
-    frameRate: 10,
-    repeat: -1
-  });
-
-  this.anims.create({
-    key: 'left',
-    frames: [ { key: 'chinta', frame: 29 } ],
-    frameRate: 20,
-    //repeat: -1
-  });
 
   // pegar o input do teclado
   cursors = this.input.keyboard.createCursorKeys();
@@ -109,40 +78,34 @@ function create() {
 
 function update() {
 
+  chinta.setVelocity(0);
+  var move = false;
   //dando play na animação
   //object.anims.play('left', true);
-
-  if (cursors.left.isDown)
-  {
+  
+  if (cursors.left.isDown){
       chinta.setVelocityX(-160);
 
-      chinta.anims.play('left', true);
-  }
-  else if (cursors.right.isDown)
-  {
+      move = true;
+
+  }else if (cursors.right.isDown){
       chinta.setVelocityX(160);
 
-      chinta.anims.play('right', true);
-  }
-  else
-  {
-      chinta.setVelocityX(0);
-
-      chinta.anims.play('stand');
-  }
-
-  if (cursors.up.isDown)
-  {
+      move = true;
+  }if (cursors.up.isDown){
       chinta.setVelocityY(-50);
 
-      chinta.anims.play('up', true);
-  }
-
-  if (cursors.down.isDown)
-  {
+      move = true;
+  }else if (cursors.down.isDown){
       chinta.setVelocityY(50);
 
-      chinta.anims.play('down', true);
+      move = true;
+  }
+
+  if(move){
+    chinta.anims.play('move', true);
+  }else{
+    chinta.anims.play('move', false);
   }
 
 }
