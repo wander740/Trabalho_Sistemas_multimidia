@@ -33,7 +33,7 @@ function preload() {
     { frameWidth: 60, frameHeight: 50 }
   );
 
-  this.load.image('coli','assets/Colisao.png')
+  this.load.image('coli','assets/collision/Colisao.png')
 }
 
 function create() {
@@ -103,7 +103,6 @@ function update() {
   //em movimento
   var move = false;
   //dando play na animação
-  //object.anims.play('left', true);
 
   //só aceita outro comanda se não estiver atacando
   if(!chinta.attack){
@@ -114,10 +113,8 @@ function update() {
       chinta.anims.play('attack',true);
 
       var pos = 10;
-      //var colis = null;
       //ativar colisão
       colis = this.physics.add.sprite(chinta.x+pos,chinta.y,'coli');
-      //colis.setScale(2.5);
       //aumentar altura da colisão
       colis.displayHeight = 80;
 
