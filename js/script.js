@@ -65,6 +65,9 @@ function create() {
   //verdadeiro se o personagem estiver atacando
   chinta.attack = false;
 
+  //mudando caixa de colisão
+  chinta.body.setSize(35, 40, 0, 0);
+
   //bola
   b = this.physics.add.sprite(chinta.x,chinta.y,'ball',0);
   b.setScale(2.0);
@@ -128,14 +131,15 @@ function update() {
     //space é o botão de atack
     if(cursors.space.isDown){
       chinta.attack = true;
-
+ 
       chinta.anims.play('attack',true);
 
-      var pos = 10;
+      var pos = 15;
       //ativar colisão
-      colis = this.physics.add.sprite(chinta.x+pos,chinta.y,'coli');
+      colis = this.physics.add.sprite(chinta.x+pos,chinta.y-pos,'coli');
       //aumentar altura da colisão
       colis.displayHeight = 80;
+      colis.displayWidth = 50;
 
       //adicionar colisão ao grupo
       coli.add(colis);
