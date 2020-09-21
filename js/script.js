@@ -34,6 +34,10 @@ function preload() {
   );
 
   this.load.image('coli','assets/collision/Colisao.png')
+
+  this.load.spritesheet('ball', 'assets/ball/ball.png',
+    { frameWidth: 14, frameHeight: 14 }
+  );
 }
 
 function create() {
@@ -45,16 +49,16 @@ function create() {
   var bac = this.add.sprite(400, 300, 'bg').setScale(2.8);
 
   //objeto 
-  // object = this.physics.add.sprite(41, 150, 'ob', 0);
-  //object.setScale(2.8);
+  object = this.physics.add.sprite(41, 150, 'ob', 0);
+  object.setScale(2.5);
 
   //animaçao do objeto
-  // this.anims.create({
-  //   key: 'left',
-  //   frames: this.anims.generateFrameNumbers('ob', { start: 0, end: 7 }),
-  //   frameRate: 10,
-  //   repeat: -1
-  // });
+  this.anims.create({
+    key: 'left',
+    frames: this.anims.generateFrameNumbers('ob', { start: 0, end: 7 }),
+    frameRate: 10,
+    repeat: -1
+  });
 
   // posição do chinta
   chinta = this.physics.add.sprite(100, 300, 'chintaMove',0);
@@ -63,10 +67,22 @@ function create() {
   chinta.setCollideWorldBounds(true);
 
   // aumentando o chinta
-  chinta.setScale(2.0);
+  chinta.setScale(2.5);
 
   //verdadeiro se o personagem estiver atacando
   chinta.attack = false;
+
+  b = this.physics.add.sprite(chinta.x,chinta.y,'ball',0);
+  b.setScale(2.0);
+  b.vel_x = 16;
+  b.vel_y = 16;
+
+  this.anims.create({
+    key: 'b',
+    frames: this.anims.generateFrameNumbers('ball', { start: 0, end: 3 }),
+    frameRate: 20,
+    repeat: -1
+  });
 
   //criando o chinta se movendo
   this.anims.create({
@@ -141,11 +157,11 @@ function update() {
 
           move = true;
       }if (cursors.up.isDown){
-          chinta.setVelocityY(-50);
+          chinta.setVelocityY(-160);
 
           move = true;
       }else if (cursors.down.isDown){
-          chinta.setVelocityY(50);
+          chinta.setVelocityY(160);
 
           move = true;
       }
@@ -159,4 +175,27 @@ function update() {
       }
     }
   }
+  object.anims.play('left',true);
+  b.anims.play('b',true);
+
+  if(b.x < 40){
+    b.x = 40;
+    b.vel_x = -b.vel_x;
+  } else if(b.x + 45 > 800){
+    ball_pos_x = 800 - 45;
+    b.vel_x = -b.vel_x;
+  }
+
+  //Check vertical bounds
+  if(b.y < 60){
+    b.y = 60;
+    b.vel_y = -b.vel_y;
+  } else if(b.y + 28 > 600){
+    b.y = 600 - 28;
+    b.vel_y = -b.vel_y;
+  }
+  //console.log(b.vel_x,b.vel_y,b.x,b.y);
+  b.x+=b.vel_x;
+  b.y+=b.vel_y;
+
 }
