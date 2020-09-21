@@ -38,6 +38,7 @@ function preload() {
   this.load.spritesheet('ball', 'assets/ball/ball.png',
     { frameWidth: 14, frameHeight: 14 }
   );
+  
 }
 
 function create() {
@@ -52,14 +53,6 @@ function create() {
   object = this.physics.add.sprite(41, 150, 'ob', 0);
   object.setScale(2.5);
 
-  //animaçao do objeto
-  this.anims.create({
-    key: 'left',
-    frames: this.anims.generateFrameNumbers('ob', { start: 0, end: 7 }),
-    frameRate: 10,
-    repeat: -1
-  });
-
   // posição do chinta
   chinta = this.physics.add.sprite(100, 300, 'chintaMove',0);
 
@@ -72,10 +65,20 @@ function create() {
   //verdadeiro se o personagem estiver atacando
   chinta.attack = false;
 
+  //bola
   b = this.physics.add.sprite(chinta.x,chinta.y,'ball',0);
   b.setScale(2.0);
+  //adicionando velocidade na direção x e y
   b.vel_x = 16;
   b.vel_y = 16;
+
+  //animaçao do objeto
+  this.anims.create({
+    key: 'left',
+    frames: this.anims.generateFrameNumbers('ob', { start: 0, end: 7 }),
+    frameRate: 10,
+    repeat: -1
+  });
 
   this.anims.create({
     key: 'b',
@@ -175,9 +178,11 @@ function update() {
       }
     }
   }
+
   object.anims.play('left',true);
   b.anims.play('b',true);
 
+  //verificando se passou da borda
   if(b.x < 40){
     b.x = 40;
     b.vel_x = -b.vel_x;
@@ -186,7 +191,6 @@ function update() {
     b.vel_x = -b.vel_x;
   }
 
-  //Check vertical bounds
   if(b.y < 60){
     b.y = 60;
     b.vel_y = -b.vel_y;
@@ -194,7 +198,8 @@ function update() {
     b.y = 600 - 28;
     b.vel_y = -b.vel_y;
   }
-  //console.log(b.vel_x,b.vel_y,b.x,b.y);
+
+  //fazer o objeto se mecher
   b.x+=b.vel_x;
   b.y+=b.vel_y;
 
