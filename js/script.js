@@ -1,4 +1,4 @@
-var config = {
+﻿var config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
@@ -50,8 +50,14 @@ function create() {
   var bac = this.add.sprite(400, 300, 'bg').setScale(2.8);
 
   //objeto 
-  object = this.physics.add.sprite(41, 150, 'ob', 0);
-  object.setScale(2.5);
+  //object = this.physics.add.sprite(41, 150, 'ob', 0);
+  objects = this.physics.add.group();
+  obj1 = objects.create(41, 150, 'ob',0);
+  obj1.setScale(2.5);
+  obj2 = objects.create(41, 300, 'ob',0);
+  obj2.setScale(2.5);
+  obj3 = objects.create(41, 450, 'ob',0);
+  obj3.setScale(2.5);
 
   // posição do chinta
   chinta = this.physics.add.sprite(100, 300, 'chintaMove',0);
@@ -114,6 +120,9 @@ function create() {
     player.destroy();
     enemy.destroy();
   });*/
+
+  this.physics.add.collider(b, objects, hitboll, null, this);
+  this.physics.add.collider(b, coli, hitbox, null, this);
 
 }
 
@@ -183,7 +192,7 @@ function update() {
     }
   }
 
-  object.anims.play('left',true);
+  obj1.anims.play('left',true);
   b.anims.play('b',true);
 
   //verificando se passou da borda
@@ -207,4 +216,13 @@ function update() {
   b.x+=b.vel_x;
   b.y+=b.vel_y;
 
+}
+
+function  hitboll(boll, obj){
+  obj.disableBody(true, true);
+  boll.vel_x = -boll.vel_x;
+}
+
+function hitbox(boll, col){
+  boll.vel_x = -boll.vel_x;
 }
