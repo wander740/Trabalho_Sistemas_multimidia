@@ -54,9 +54,9 @@ function create() {
   objects = this.physics.add.group();
   obj1 = objects.create(41, 150, 'ob',0);
   obj1.setScale(2.5);
-  obj2 = objects.create(41, 300, 'ob',0);
+  obj2 = objects.create(41, 300, 'ob',2);
   obj2.setScale(2.5);
-  obj3 = objects.create(41, 450, 'ob',0);
+  obj3 = objects.create(41, 450, 'ob',4);
   obj3.setScale(2.5);
 
   // posição do chinta
@@ -193,6 +193,8 @@ function update() {
   }
 
   obj1.anims.play('left',true);
+  obj2.anims.play('left',true);
+  obj3.anims.play('left',true);
   b.anims.play('b',true);
 
   //verificando se passou da borda
