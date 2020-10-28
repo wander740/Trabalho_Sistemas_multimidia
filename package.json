@@ -1,0 +1,24 @@
+{
+  "name": "trabalho_sistemas_multimidia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "primeicons": "^4.0.0",
+    "primereact": "^5.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wander740/Trabalho_Sistemas_multimidia.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wander740/Trabalho_Sistemas_multimidia/issues"
+  },
+  "homepage": "https://github.com/wander740/Trabalho_Sistemas_multimidia#readme"
+}
