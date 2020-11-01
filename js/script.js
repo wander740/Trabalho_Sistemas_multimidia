@@ -70,6 +70,7 @@ function create() {
 
   //verdadeiro se o personagem estiver atacando
   chinta.attack = false;
+  chinta.dash = false;
 
   //mudando caixa de colisão
   chinta.body.setSize(35, 40, 0, 0);
@@ -80,6 +81,34 @@ function create() {
   //adicionando velocidade na direção x e y
   b.vel_x = 16;
   b.vel_y = 16;
+
+  this.anims.create({
+    key: 'dt',
+    frames: this.anims.generateFrameNumbers('chintaMove', { start: 8, end: 9 }),
+    frameRate: 7,
+    repeat: 0
+  });
+
+  this.anims.create({
+    key: 'dp',
+    frames: this.anims.generateFrameNumbers('chintaMove', { start: 4, end: 5 }),
+    frameRate: 7,
+    repeat: 0
+  });
+
+  this.anims.create({
+    key: 'df',
+    frames: this.anims.generateFrameNumbers('chintaMove', { start: 6, end: 7 }),
+    frameRate: 7,
+    repeat: 0
+  });
+  
+  this.anims.create({
+    key: 'db',
+    frames: this.anims.generateFrameNumbers('chintaMove', { start: 10, end: 11 }),
+    frameRate: 7,
+    repeat: 0
+  });
 
   //animaçao do objeto
   this.anims.create({
@@ -112,8 +141,18 @@ function create() {
     repeat: 0
   });
 
+  this.anims.create({
+    key: 'idle',
+    frames: this.anims.generateFrameNumbers('chintaMove', { start: 13, end: 16 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
   // pegar o input do teclado
   cursors = this.input.keyboard.createCursorKeys();
+
+  keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+
 
   /*
   physics.add.overlap(coli, this.stars, function(player, enemy) {
@@ -136,7 +175,7 @@ function update() {
   //dando play na animação
 
   //só aceita outro comanda se não estiver atacando
-  if(!chinta.attack){
+  if(!chinta.attack && !chinta.dash){
     //space é o botão de atack
     if(cursors.space.isDown){
       chinta.attack = true;
@@ -157,38 +196,117 @@ function update() {
       //ficar parado
       chinta.once('animationcomplete', () => {
         //colocar animação idle aqui
-        chinta.anims.play('move', false);
+        chinta.anims.play('idle', true);
         //desabilitar colisão
         coli.clear(true,true);
         chinta.attack = false;
       });
 
     }else{
+      
       if (cursors.left.isDown){
+         
           chinta.setVelocityX(-160);
 
           move = true;
+
+          //dash
+          if(keyA.isDown && !chinta.dash){
+
+            chinta.setVelocityX(-1000);
+            chinta.dash = true;
+            chinta.anims.play("db", true);
+            
+            chinta.once('animationcomplete', () => {
+              chinta.anims.play('idle', true);
+              chinta.dash = false;
+            });
+
+          }
+
       }else if (cursors.right.isDown){
           chinta.setVelocityX(160);
 
           move = true;
+
+          //dash
+          if(keyA.isDown && !chinta.dash){
+
+            chinta.setVelocityX(1000);
+            chinta.dash = true;
+            chinta.anims.play("df", true);
+            
+            chinta.once('animationcomplete', () => {
+              chinta.anims.play('idle', true);
+              chinta.dash = false;
+            });
+
+          }
       }if (cursors.up.isDown){
           chinta.setVelocityY(-160);
 
           move = true;
+
+          //dash
+          if(keyA.isDown && !chinta.dash){
+
+            chinta.setVelocityY(-1000);
+            chinta.dash = true;
+            chinta.anims.play("dt", true);
+            
+            chinta.once('animationcomplete', () => {
+              chinta.anims.play('idle', true);
+              chinta.dash = false;
+            });
+
+          }
       }else if (cursors.down.isDown){
           chinta.setVelocityY(160);
 
           move = true;
+
+          //dash
+          if(keyA.isDown && !chinta.dash){
+
+            chinta.setVelocityY(1000);
+            chinta.dash = true;
+            chinta.anims.play("dp", true);
+            
+            chinta.once('animationcomplete', () => {
+              chinta.anims.play('idle', true);
+              chinta.dash = false;
+            });
+
+          }
       }
 
-      //se estiver se movendo ativar animação de movimento
-      if(move){
-        chinta.anims.play('move', true);
-      }else{
-        //colocar animação idle aqui
-        chinta.anims.play('move', false);
+      if(!chinta.dash){
+      
+        //se estiver se movendo ativar animação de movimento
+        if(move){
+          chinta.anims.play('move', true);
+        }else{
+          //colocar animação idle aqui
+          chinta.anims.play('idle', true);
+
+          //dash quando parado
+          if(keyA.isDown){
+
+            chinta.setVelocityX(1000);
+            chinta.dash = true;
+            chinta.anims.play("df", true);
+            
+            chinta.once('animationcomplete', () => {
+              chinta.anims.play('idle', true);
+              chinta.dash = false;
+            });
+    
+          }
+
+        }
+
       }
+
     }
   }
 
@@ -217,7 +335,7 @@ function update() {
   //fazer o objeto se mecher
   b.x+=b.vel_x;
   b.y+=b.vel_y;
-
+ 
 }
 
 function  hitboll(boll, obj){
@@ -226,5 +344,24 @@ function  hitboll(boll, obj){
 }
 
 function hitbox(boll, col){
-  boll.vel_x = -boll.vel_x;
+  if(boll.vel_x<0){
+
+    boll.vel_x = -boll.vel_x;
+
+  }
+  //se estiver no limite maximo não soma mais
+  if(Math.abs(boll.vel_x)==48){
+    return;
+  }
+  boll.vel_x += 32;
+
+  //aumenta velocidade
+  this.time.delayedCall(1600, () => {
+    if(boll.vel_x==48){
+      boll.vel_x-= 32;
+    }else if(boll.vel_x==-48){
+      boll.vel_x+= 32;
+    }
+  })
+
 }
