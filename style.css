@@ -1,4 +1,30 @@
 .main{
     margin: 10% 25% 10% 25%;
-    border: 2px solid red;
+    /* border: 2px solid red; */
+}
+
+.center{
+  
+  width: 50%;
+  height: 50%;
+  /* border: 2px solid red; */
+  margin: 20% 25% 10% 25%;
+}
+
+.button{
+  margin-left:60px;
+}
+
+.titulo{
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.image{
+  background-image: url('assets/battle-flip.png');
+  background-repeat: no-repeat;
+  /* border: 2px solid green; */
+  width: 50%;
+  height: 50%;
+  margin: 10% 25% 10% 25%;
 }
