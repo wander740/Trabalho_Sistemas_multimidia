@@ -79,7 +79,7 @@ function create() {
   chinta = this.physics.add.sprite(100, 300, 'chintaMove', 0);
 
   // posição do chinta
-  chinta1 = this.physics.add.sprite(900, 300, 'chintaMove', 0);
+  chinta1 = this.physics.add.sprite(700, 300, 'chintaMove', 0);
 
   // personagem colidi nas bordas
   chinta.setCollideWorldBounds(true);
@@ -448,6 +448,7 @@ function update() {
 
 
 
+  chinta1.setFlipX(true);
 
   //só aceita outro comanda se não estiver atacando
   if (!chinta1.attack && !chinta1.dash) {
