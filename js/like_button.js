@@ -12,6 +12,7 @@ class LikeButton extends React.Component {
     return e(
       'button',
       { onClick: () => {
+        //localhost:8080
        window.location.href = "http://localhost:8080/game.html"
       }
       },
