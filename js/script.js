@@ -35,10 +35,6 @@ function preload() {
     { frameWidth: 60, frameHeight: 50 }
   );
 
-  this.load.spritesheet('chintaMove1', 'assets/Chinta.png',
-    { frameWidth: 60, frameHeight: 50 }
-  );
-
   this.load.image('coli', 'assets/collision/Colisao.png')
 
   this.load.spritesheet('ball', 'assets/ball/ball.png',
@@ -106,7 +102,7 @@ function create() {
   chinta.body.setSize(35, 40, 0, 0);
 
   //mudando caixa de colisão
-  chinta1.body.setSize(35, 40, 0, 0);
+  chinta1.body.setSize(0, 40, 0, 0);
 
   //bola
   b = this.physics.add.sprite(chinta.x, chinta.y, 'ball', 0);
@@ -186,39 +182,6 @@ function create() {
     repeat: -1
   });
 
-
-
-
-
-
-  this.anims.create({
-    key: 'dt1',
-    frames: this.anims.generateFrameNumbers('chintaMove1', { start: 8, end: 9 }),
-    frameRate: 7,
-    repeat: 0
-  });
-
-  this.anims.create({
-    key: 'dp1',
-    frames: this.anims.generateFrameNumbers('chintaMove1', { start: 4, end: 5 }),
-    frameRate: 7,
-    repeat: 0
-  });
-
-  this.anims.create({
-    key: 'df1',
-    frames: this.anims.generateFrameNumbers('chintaMove1', { start: 6, end: 7 }),
-    frameRate: 7,
-    repeat: 0
-  });
-
-  this.anims.create({
-    key: 'db1',
-    frames: this.anims.generateFrameNumbers('chintaMove1', { start: 10, end: 11 }),
-    frameRate: 7,
-    repeat: 0
-  });
-
   //animaçao do objeto
   // this.anims.create({
   //   key: 'left',
@@ -233,29 +196,6 @@ function create() {
   //   frameRate: 20,
   //   repeat: -1
   // });
-
-  //criando o chinta se movendo
-  this.anims.create({
-    key: 'move1',
-    frames: this.anims.generateFrameNumbers('chintaMove1', { start: 17, end: 22 }),
-    frameRate: 10,
-    repeat: -1
-  });
-
-  //criando o chinta atacando
-  this.anims.create({
-    key: 'attack1',
-    frames: this.anims.generateFrameNumbers('chintaMove1', { start: 0, end: 3 }),
-    frameRate: 10,
-    repeat: 0
-  });
-
-  this.anims.create({
-    key: 'idle1',
-    frames: this.anims.generateFrameNumbers('chintaMove1', { start: 13, end: 16 }),
-    frameRate: 10,
-    repeat: -1
-  });
 
   // pegar o input do teclado
   cursors = this.input.keyboard.createCursorKeys();
@@ -448,7 +388,7 @@ function update() {
     if (keyX.isDown) {
       chinta1.attack = true;
 
-      chinta1.anims.play('attack1', true);
+      chinta1.anims.play('attack', true);
 
       var pos = 15;
       //ativar colisão
@@ -464,7 +404,7 @@ function update() {
       //ficar parado
       chinta1.once('animationcomplete', () => {
         //colocar animação idle aqui
-        chinta1.anims.play('idle1', true);
+        chinta1.anims.play('idle', true);
         //desabilitar colisão
         coli.clear(true, true);
         chinta1.attack = false;
@@ -484,10 +424,10 @@ function update() {
 
           chinta1.setVelocityX(-1000);
           chinta1.dash = true;
-          chinta1.anims.play("db1", true);
+          chinta1.anims.play("df", true);
 
           chinta1.once('animationcomplete', () => {
-            chinta1.anims.play('idle1', true);
+            chinta1.anims.play('idle', true);
             chinta1.dash = false;
           });
 
@@ -504,10 +444,10 @@ function update() {
 
           chinta1.setVelocityX(1000);
           chinta1.dash = true;
-          chinta1.anims.play("df1", true);
+          chinta1.anims.play("db", true);
 
           chinta1.once('animationcomplete', () => {
-            chinta1.anims.play('idle1', true);
+            chinta1.anims.play('idle', true);
             chinta1.dash = false;
           });
 
@@ -523,10 +463,10 @@ function update() {
 
           chinta1.setVelocityY(-1000);
           chinta1.dash = true;
-          chinta1.anims.play("dt1", true);
+          chinta1.anims.play("dt", true);
 
           chinta1.once('animationcomplete', () => {
-            chinta1.anims.play('idle1', true);
+            chinta1.anims.play('idle', true);
             chinta1.dash = false;
           });
 
@@ -542,10 +482,10 @@ function update() {
 
           chinta1.setVelocityY(1000);
           chinta1.dash = true;
-          chinta1.anims.play("dp1", true);
+          chinta1.anims.play("dp", true);
 
           chinta1.once('animationcomplete', () => {
-            chinta1.anims.play('idle1', true);
+            chinta1.anims.play('idle', true);
             chinta1.dash = false;
           });
 
@@ -555,21 +495,21 @@ function update() {
       if (!chinta1.dash) {
 
         //se estiver se movendo ativar animação de movimento
-        if (move) {
-          chinta1.anims.play('move1', true);
+        if (move1) {
+          chinta1.anims.play('move', true);
         } else {
           //colocar animação idle aqui
-          chinta1.anims.play('idle1', true);
+          chinta1.anims.play('idle', true);
 
           //dash quando parado
           if (keyC.isDown) {
 
-            chinta1.setVelocityX(1000);
+            chinta1.setVelocityX(-1000);
             chinta1.dash = true;
             chinta1.anims.play("df", true);
 
             chinta1.once('animationcomplete', () => {
-              chinta1.anims.play('idle1', true);
+              chinta1.anims.play('idle', true);
               chinta1.dash = false;
             });
 
@@ -585,12 +525,11 @@ function update() {
   obj1.anims.play('left', true);
   obj2.anims.play('left', true);
   obj3.anims.play('left', true);
-  b.anims.play('b', true);
-
   obj4.anims.play('left', true);
   obj5.anims.play('left', true);
   obj6.anims.play('left', true);
- 
+
+  b.anims.play('b', true);
 
   //verificando se passou da borda
   if (b.x < 40) {
