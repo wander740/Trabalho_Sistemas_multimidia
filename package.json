@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "http-server": "^0.12.3",
     "primeicons": "^4.0.0",
     "primereact": "^5.0.1"
   },
