@@ -110,16 +110,15 @@ function create() {
 
   //bola
   b = this.physics.add.sprite(chinta.x, chinta.y, 'ball', 0);
-  b1 = this.physics.add.sprite(chinta1.x, chinta1.y, 'ball', 0);
+  
 
   b.setScale(2.0);
-  b1.setScale(2.0);
+ 
   //adicionando velocidade na direção x e y
   b.vel_x = 16;
   b.vel_y = 16;
 
-  b1.vel_x = 16;
-  b1.vel_y = 16;
+
 
   this.anims.create({
     key: 'dt',
@@ -159,13 +158,6 @@ function create() {
 
   this.anims.create({
     key: 'b',
-    frames: this.anims.generateFrameNumbers('ball', { start: 0, end: 3 }),
-    frameRate: 20,
-    repeat: -1
-  });
-
-  this.anims.create({
-    key: 'b1',
     frames: this.anims.generateFrameNumbers('ball', { start: 0, end: 3 }),
     frameRate: 20,
     repeat: -1
@@ -598,7 +590,7 @@ function update() {
   obj4.anims.play('left', true);
   obj5.anims.play('left', true);
   obj6.anims.play('left', true);
-  b1.anims.play('b', true);
+ 
 
   //verificando se passou da borda
   if (b.x < 40) {
@@ -628,7 +620,7 @@ function hitboll(boll, obj) {
   boll.vel_x = -boll.vel_x;
   score += 10;
   scoreText.setText('Score: ' + score);
-  if (score == 30) {
+  if (score == 40) {
 
     window.location.href = "http://localhost:8080/index.html"
   }
@@ -640,7 +632,7 @@ function hitboll1(boll, obj1) {
   boll.vel_x = -boll.vel_x;
   score1 += 10;
   scoreText1.setText('Score: ' + score1);
-  if (score1 == 30) {
+  if (score1 == 40) {
 
     window.location.href = "http://localhost:8080/index.html"
 
